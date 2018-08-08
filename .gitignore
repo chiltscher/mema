@@ -1,0 +1,4 @@
+config/app.config
+.idea
+build
+node_modules

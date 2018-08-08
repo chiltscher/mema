@@ -1,0 +1,25 @@
+{
+  "name": "mema",
+  "version": "1.0.0",
+  "description": "Small Web application for managing club members",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mema",
+    "user",
+    "manager",
+    "member",
+    "manager"
+  ],
+  "author": "Christian Hiltscher",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "tintoa-data-service": "^2.0.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0"
+  }
+}
