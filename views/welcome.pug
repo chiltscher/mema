@@ -1,7 +1,11 @@
-html
-    head
-        title Mema - Manage Your Members easy
-        link(rel="stylesheet", href="../assets/basestyle.css")
-    body
-        h1 Welcome to Mema
-        h3 Manage Your Members easy
+include partials/head
+
+body
+    .container(style="margin: 0 auto;  margin-top: 5%;")
+        .row.align-items-center(style="min-height: 30%;")
+            .col(style="text-align: center;")
+                h1 Willkommen bei MEMA
+                h3 Die einfache Verwaltung Ihrer Vereinsmitglieder
+                hr
+                a(href="/signIn" type="button" class="btn btn-light btn-lg" style="margin: 5px;") Anmelden
+                a(href="/signUp" type="button" class="btn btn-light btn-lg" style="margin: 5px;") Registrieren

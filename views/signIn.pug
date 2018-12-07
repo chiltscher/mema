@@ -1,0 +1,13 @@
+include ./partials/head
+
+body
+    .container(style="width: 40%; margin-top: 10%;")
+        .container
+            form(action="/signIn" method="POST")
+                .form-group
+                    input(name="shortName" type="text" class="form-control" required=true placeholder="Kürzel")
+                .form-group
+                    input(name="mail" type="email" class="form-control" id="InputEmail" required=true aria-describedby="emailHelp" placeholder="E-Mail Adresse")
+                .form-group
+                    input(name="password" type="password" class="form-control" id="InputPassword" required=true placeholder="Passwort")
+                button(type="submit" class="btn btn-light") Anmelden

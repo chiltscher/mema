@@ -1,0 +1,29 @@
+include ./partials/head
+
+body
+    .container(style="width: 40%; margin-top: 10%;")
+        .container(style="margin-bottom: 50px;")
+            h3 Registrieren Sie hier einen neuen Verein.
+        .container
+            form(action="/signUp" method="POST")
+                .form-row
+                    .col-md-10.form-group
+                        input(name="clubName" type="text" class="form-control"  required=true placeholder="Name des Vereins")
+                    .col-md-2.form-group
+                        input(name="shortName" type="text" class="form-control" required=true placeholder="Kürzel")
+                .form-row
+                    .col-md-12.form-group
+                        small(id="shortNameHelp" class="form-text text-muted") Das Kürzel des Vereins sollte eindeutig sein. Er wird später zum Anmelden benötigt!
+                .form-row
+                    .col.form-group
+                        input(name="firstName" type="text" class="form-control" placeholder="Vorname")
+                    .col.form-group
+                        input(name="lastName" type="text" class="form-control" placeholder="Nachname")
+                .form-group
+                    input(name="mail" type="email" class="form-control" id="InputEmail" required=true aria-describedby="emailHelp" placeholder="E-Mail Adresse")
+                    small(id="emailHelp" class="form-text text-muted") Geben Sie hier die Email-Adresse der Person ein, welche MEMA administrativ betreut.
+                .form-group
+                    input(name="password" type="password" class="form-control" id="InputPassword" required=true placeholder="Passwort")
+                .form-group
+                    input(name="passwordConfirm" type="password" class="form-control" id="InputPasswordConfirm" required=true placeholder="Passwort wiederholen")
+                button(type="submit" class="btn btn-light") Registrieren

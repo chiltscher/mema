@@ -1,13 +1,9 @@
 import { DataService } from "tintoa-data-service";
+import {getMongoConfiguration} from "../Configuration";
 
 const BaseData = new DataService(
     "mema_basedata",
     DataService.StoreTypes.Mongo,
-    {
-        host: "",
-        user: "",
-        password: "",
-        port: 27017
-    });
+    getMongoConfiguration());
 
 export { BaseData }

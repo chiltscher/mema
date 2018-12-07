@@ -1,4 +1,4 @@
-config/app.config
+config/config.user.json
 .idea
 build
 node_modules
