@@ -2,6 +2,7 @@ import * as React from "react";
 import * as classes from "../ComponentsStyle.css";
 import axios from "axios";
 import {MemberProps} from "../../../data/Member/MemberProps";
+import MemberListEntry from "./MemberListEntry";
 
 
 interface ListState {
@@ -26,20 +27,10 @@ export default class MemberList extends React.Component<{}, ListState> {
         });
     }
 
-    deleteMemeber(id: string) {
-        axios.post(`${window.origin}/member/del`, {id}).then(res => {
-            this.loadMembers();
-        });
-    }
-
-
-
     render() {
 
         let members = this.state.members.map((member, i) => {
-            return (<li key={i}>{member.firstName} {member.lastName} <button onClick={
-                () => {this.deleteMemeber(member.$id)}
-            }>Löschen</button></li>);
+            return (<MemberListEntry list={this} member={member} key={i} />);
         });
 
         return (
