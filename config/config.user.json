@@ -1,0 +1,8 @@
+{
+  "store" : {
+    "host": "tintoa.net",
+    "user": "tintoa-dev",
+    "password": "N07#M1ll#M0un741n",
+    "port": 27017
+  }
+}

@@ -7,3 +7,8 @@ html, body {
   background-size: cover;
   background-position: top;
   overflow: hidden; }
+
+#react-app {
+  display: inline-flex;
+  width: 100%;
+  height: 100%; }
