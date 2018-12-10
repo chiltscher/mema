@@ -1,23 +1,23 @@
 import * as React from "react";
 import { MemberProps } from "../../../data/Member/MemberProps";
-import Axios from "axios";
-import MemberList from "./MemberList";
+import * as classes from "./MemberAdministrationStyle.css";
+import {Mema} from "../../store/store";
+import {deleteMemeber} from "../../actions/actions";
 
 interface ListEntryProps {
     member: MemberProps;
-    list: MemberList;
 }
 
 export default class MemberListEntry extends React.Component<ListEntryProps> {
 
-    deleteMemeber(id: string) {
-        Axios.post(`${window.origin}/member/del`, { id }).then(res => {
-            this.props.list.loadMembers();
-        });
+    deleteMemeber() {
+        Mema.dispatch(deleteMemeber(this.props.member.$id));
     }
+
     render() {
-        return (<li> {this.props.member.firstName} {this.props.member.lastName} <button onClick={
-            () => { this.deleteMemeber(this.props.member.$id) }
-        }>Löschen</button></li>)
+        return (<li className={"list-group-item"}>
+            <span className={classes.fullname}>{this.props.member.firstName} {this.props.member.lastName}
+            </span>
+            <i className={classes.icon + " material-icons"} onClick={this.deleteMemeber.bind(this)}>delete</i></li>)
     }
 }

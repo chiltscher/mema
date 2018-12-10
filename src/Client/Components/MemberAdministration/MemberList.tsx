@@ -1,46 +1,70 @@
 import * as React from "react";
 import * as classes from "../ComponentsStyle.css";
-import axios from "axios";
 import {MemberProps} from "../../../data/Member/MemberProps";
 import MemberListEntry from "./MemberListEntry";
+import {AppState} from "../../reducers/reducer";
+import {Dispatch} from "redux";
+import {connect, DispatchProp} from "react-redux";
+import {loadAllMembers} from "../../actions/actions";
 
-
-interface ListState {
+// Redux things
+interface StateProps {
     members: MemberProps[];
 }
 
-export default class MemberList extends React.Component<{}, ListState> {
+interface DispatchProps {
+    fetchMembers: () => void;
+}
 
-    constructor(props) {
+type Properties = StateProps & DispatchProps;
+
+const mapStateToProps = (state: AppState) : StateProps => {
+    return {
+        members: state.members
+    }
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) : DispatchProps => {
+    return {
+        fetchMembers: () => {
+            dispatch(loadAllMembers());
+        }
+    }
+};
+
+
+class MemberList extends React.Component<Properties> {
+
+    constructor(props: Properties) {
         super(props);
-        this.state = {
-            members: []
-        };
     }
     componentDidMount(): void {
-        this.loadMembers();
-    }
-
-    loadMembers() {
-        axios.get(`${window.origin}/member/list`).then(res => {
-            this.setState({members: res.data});
-        });
+        this.props.fetchMembers();
     }
 
     render() {
 
-        let members = this.state.members.map((member, i) => {
-            return (<MemberListEntry list={this} member={member} key={i} />);
+        let members = this.props.members.map((member, i) => {
+            return (<MemberListEntry member={member} key={i} />);
         });
 
         return (
             <div className={classes.memberList}>
                 <h3>Vereinsmitglieder</h3>
                 <hr/>
-                <ol>
+                <div className={"form-group"}>
+                    <label>Suche</label>
+                    <input type="text" className="form-control" placeholder="Name des Mitglieds"/>
+                </div>
+                <ul className={"list-group"} role="tablist">
                     {members}
-                </ol>
+                </ul>
             </div>
         )
     }
 }
+
+export default connect<StateProps, DispatchProps, any>(
+    mapStateToProps,
+    mapDispatchToProps
+)(MemberList);

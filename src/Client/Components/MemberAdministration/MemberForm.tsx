@@ -1,11 +1,15 @@
 import * as React from "react";
 import * as classes from "../ComponentsStyle.css";
 import {MemberProps} from "../../../data/Member/MemberProps";
+import Axios from "axios";
 
 export default class MemberForm extends React.Component<{}, MemberProps> {
     private saveMember() {
-        console.dir(this.state);
+        Axios.post(`${window.origin}/member/add`, { ...this.state }).then(res => {
+            console.log(`Created ${this.state}`);
+        });
     };
+
     private processInput(e: any) {
         let state = {...this.state};
         state[e.target.name] = e.target.value;
@@ -37,15 +41,15 @@ export default class MemberForm extends React.Component<{}, MemberProps> {
             <div className={classes.sideForm}>
                 <h3>Vereinsmitglied hinzufügen</h3>
                 <hr/>
-                <div>
+                <form>
                     <div className={"form-row"}>
                         <div className={"col form-group"}>
                             <label>Vorname</label>
-                            <input onChange={this.processInput.bind(this)} value={this.state.firstName} name="firstName" type="text" className="form-control" placeholder="Vorname"/>
+                            <input onChange={this.processInput.bind(this)} value={this.state.firstName} name="firstName" type="text" className="form-control" placeholder="Vorname" required={true}/>
                         </div>
                         <div className={"col form-group"}>
                             <label>Nachname</label>
-                            <input onChange={this.processInput.bind(this)} value={this.state.lastName} name="lastName" type="text" className="form-control" placeholder="Nachname"/>
+                            <input onChange={this.processInput.bind(this)} value={this.state.lastName} name="lastName" type="text" className="form-control" placeholder="Nachname" required={true}/>
                         </div>
                     </div>
 
@@ -75,7 +79,7 @@ export default class MemberForm extends React.Component<{}, MemberProps> {
                     </div>
                     <div className={"form-group"}>
                         <label>E-Mail Adresse</label>
-                        <input onChange={this.processInput.bind(this)} value={this.state.mail} name="mail" type="mail" className="form-control" placeholder="E-Mail Adresse"/>
+                        <input required={true} onChange={this.processInput.bind(this)} value={this.state.mail} name="mail" type="mail" className="form-control" placeholder="E-Mail Adresse"/>
                     </div>
                     <hr/>
 
@@ -106,7 +110,7 @@ export default class MemberForm extends React.Component<{}, MemberProps> {
                         </div>
                     </div>
                     <button onClick={this.saveMember.bind(this)} className="btn btn-dark" type={"submit"}>Anlegen</button>
-                </div>
+                </form>
             </div>
         );
     }

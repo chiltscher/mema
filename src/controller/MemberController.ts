@@ -38,6 +38,7 @@ MemberController.post("/add", (req, res) => {
         context: "member",
         data: {firstName, lastName, mail}
     }).then((addResult) => {
+        console.log(addResult);
         res.json(addResult);
     });
 });
