@@ -1,16 +1,16 @@
 export interface MemberProps {
-    $id: string;
+    $id?: string;
     firstName: string;
     lastName: string;
     dateOfBirth: Date;
     mail: string;
-    street: string;
-    houseNumber: string;
-    zipCode: number;
-    placeOfResidence: string;
-    memberSince: Date;
-    nameOfBank: string;
-    accountOwner: string;
-    iban: string;
+    street?: string;
+    houseNumber?: string;
+    zipCode?: number;
+    placeOfResidence?: string;
+    memberSince?: Date;
+    nameOfBank?: string;
+    bankAccountOwner?: string;
+    iban?: string;
     active: boolean;
 }

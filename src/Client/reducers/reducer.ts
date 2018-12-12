@@ -2,11 +2,13 @@ import {MemberProps} from "../../data/Member/MemberProps";
 import axios from "axios";
 import {ActionTypes, MemberAction} from "../actions/actions";
 import {Mema} from "../store/store";
+import Member from "../../data/Member/Member";
 
 export interface AppState {
     error: boolean;
     errorMessage: string;
     loadingMembers: boolean;
+    currentMember: MemberProps,
     members: MemberProps[];
 }
 
@@ -14,6 +16,7 @@ const initalState : AppState = {
     error: false,
     errorMessage: "",
     loadingMembers: false,
+    currentMember: new Member(),
     members: []
 };
 

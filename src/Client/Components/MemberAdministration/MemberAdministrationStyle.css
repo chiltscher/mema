@@ -1,0 +1,9 @@
+.listEntry {
+  width: 100%; }
+
+.fullname {
+  width: 85%;
+  display: inline-flex; }
+
+.icon {
+  cursor: pointer; }
