@@ -4,7 +4,6 @@ import MemberList from "./MemberAdministration/MemberList";
 import MemberForm from "./MemberAdministration/MemberForm";
 
 export class View extends React.Component {
-
     render() {
         return (
             <div className={classes.view}>

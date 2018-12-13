@@ -1,8 +1,8 @@
 import * as React from "react";
 import { MemberProps } from "../../../data/Member/MemberProps";
 import * as classes from "./MemberAdministrationStyle.css";
-import {Mema} from "../../store/store";
-import {deleteMemeber} from "../../actions/actions";
+import {Mema} from "../../state/store";
+import {deleteMemeber} from "../../state/memberList/actions";
 
 interface ListEntryProps {
     member: MemberProps;

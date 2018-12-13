@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/assets", express.static(resolve(join(__dirname, "..", "..", "assets"))));
-app.use("/member", MemberController);
+app.use("/memberList", MemberController);
 
 
 app.set("view engine", "pug");
@@ -109,7 +109,7 @@ app.post("/signUp", async (req) => {
             roles: ["mema_manager"]
         }
     });
-    // save the new user as member
+    // save the new user as memberList
     clubService.save({
         context: "member",
         data: {

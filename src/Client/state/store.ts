@@ -1,5 +1,5 @@
 import {applyMiddleware, createStore, Store} from "redux";
-import {AppState, MemberReducer} from "../reducers/reducer";
+import {AppState, MemberReducer} from "./memberList/reducer";
 import thunk from "redux-thunk"
 
 const middleware = applyMiddleware(thunk);

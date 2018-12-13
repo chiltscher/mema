@@ -2,10 +2,10 @@ import * as React from "react";
 import * as classes from "../ComponentsStyle.css";
 import {MemberProps} from "../../../data/Member/MemberProps";
 import MemberListEntry from "./MemberListEntry";
-import {AppState} from "../../reducers/reducer";
+import {AppState} from "../../state/memberList/reducer";
 import {Dispatch} from "redux";
 import {connect, DispatchProp} from "react-redux";
-import {loadAllMembers} from "../../actions/actions";
+import {loadAllMembers} from "../../state/memberList/actions";
 
 // Redux things
 interface StateProps {
