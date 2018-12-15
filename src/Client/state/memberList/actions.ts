@@ -5,8 +5,9 @@ export enum MemberActionType {
     CreateMember = "CREATE_MEMBER",
     EditMember = "EDIT_MEMBER",
     SaveMember = "SAVE_MEMBER",
-    LoadAllMembers = "LOAD_ALL_MEMBERS_BEGIN",
-    LoadAllMembersFinished = "LOAD_ALL_MEMBERS_FINISHED"
+    LoadAllMembers = "LOAD_ALL_MEMBERS",
+    SetMemberlist = "SET_MEMBERLIST",
+    Filter = "FILTER_MEMBER_LIST"
 }
 
 export interface DeleteMemberAction {
@@ -18,7 +19,17 @@ export interface LoadMembersAction {
     type: MemberActionType.LoadAllMembers
 }
 
-export type MemberAction = DeleteMemberAction | LoadMembersAction;
+export interface SetMemberlistAction {
+    type: MemberActionType.SetMemberlist;
+    list: MemberProps[];
+}
+
+export interface FilterAction {
+    type: MemberActionType.Filter;
+    filter: string;
+}
+
+export type MemberAction = DeleteMemberAction | LoadMembersAction | SetMemberlistAction | FilterAction;
 
 export function deleteMemeber(id: string) : DeleteMemberAction {
     return {
@@ -27,8 +38,23 @@ export function deleteMemeber(id: string) : DeleteMemberAction {
     }
 }
 
+export function filterList(filter: string) : FilterAction  {
+    return {
+        type: MemberActionType.Filter,
+        filter
+    }
+}
+
+
 export function loadAllMembers() : LoadMembersAction {
     return {
         type: MemberActionType.LoadAllMembers
+    }
+}
+
+export function setMemberlist(list: MemberProps[]) : SetMemberlistAction {
+    return {
+        type: MemberActionType.SetMemberlist,
+        list
     }
 }

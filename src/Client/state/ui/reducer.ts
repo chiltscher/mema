@@ -1,4 +1,4 @@
-import {UiAction} from "./actions";
+import {UiAction, UiActionType} from "./actions";
 
 
 export interface UiState {
@@ -12,5 +12,16 @@ const INITIAL_UI_STATE = {
 };
 
 export function UiReducer(state: UiState = INITIAL_UI_STATE, action: UiAction) : UiState {
-
+    let newState = {...state};
+    switch (action.type) {
+        case UiActionType.Error: {
+            newState.error = action.error;
+            break;
+        }
+        case UiActionType.Loading: {
+            newState.loading = action.loading;
+            break;
+        }
+    }
+    return newState;
 }

@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/assets", express.static(resolve(join(__dirname, "..", "..", "assets"))));
-app.use("/memberList", MemberController);
+app.use("/member", MemberController);
 
 
 app.set("view engine", "pug");
@@ -94,7 +94,7 @@ app.post("/signUp", async (req) => {
     });
     let id = result.first().id;
 
-    // create an club service to store members and users
+    // create an club service to store list and users
     let clubService = new DataService(
         "mema_club_" + id,
         DataService.StoreTypes.Mongo,

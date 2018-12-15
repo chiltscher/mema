@@ -1,67 +1,67 @@
 import {MemberProps} from "../../../data/Member/MemberProps";
 import axios from "axios";
-import {MemberActionType, MemberAction} from "./actions";
+import {MemberAction, MemberActionType, setMemberlist} from "./actions";
 import {Mema} from "../store";
-import Member from "../../../data/Member/Member";
+import {showErrorMessage} from "../ui/actions";
 
 export interface MemberListState {
-    loadingMembers: boolean;
-    members: MemberProps[];
+    loading: boolean;
+    filter: string;
+    membersAvailable: MemberProps[];
+    list: MemberProps[];
 }
 
 const INITIAL_LIST_STATE : MemberListState = {
-    loadingMembers: false,
-    members: []
+    loading: false,
+    filter: "",
+    membersAvailable: [],
+    list: []
 };
 
-export function MemberReducer(state: MemberListState = INITIAL_LIST_STATE, action: MemberAction) {
+export function MemberReducer(state: MemberListState = INITIAL_LIST_STATE, action: MemberAction) : MemberListState {
     switch (action.type) {
+        case MemberActionType.LoadAllMembers: {
+            axios.get(`${window.origin}/member/list`).then(res => {
+                Mema.dispatch(setMemberlist([...res.data]));
+            }).catch(error => {
+                Mema.dispatch(showErrorMessage(error));
+            });
+            return {...state, loading: true};
+        }
+        case MemberActionType.SetMemberlist: {
+            let membersAvailable = [...action.list];
+            return {
+                ...state,
+                membersAvailable: membersAvailable,
+                list: membersAvailable.filter(member => {
+                   return (`${member.firstName} ${member.lastName}`).includes(state.filter);
+                }),
+                loading: false
+            }
+        }
 
-        // case MemberActionType.SaveMember: {
-        //     let newState = {...state};
-        //     newState.members = [...state.members];
-        //     return newState;
-        // }
+        case MemberActionType.Filter: {
+            return {
+                ...state,
+                list: state.membersAvailable.filter(member => {
+                    return (`${member.firstName} ${member.lastName}`)
+                        .toLowerCase()
+                        .includes(action.filter.toLowerCase());
+                }),
+                filter: action.filter,
+                loading: false
+            }
+        }
+
         case MemberActionType.DeleteMember: {
             axios.post(`${window.origin}/member/del`, {id: action.id}).then(res => {
                 Mema.dispatch({
                     type: MemberActionType.LoadAllMembers
                 });
             }).catch(error => {
-                // Mema.dispatch({
-                //     type: MemberActionType.Error,
-                //     payload: error
-                // });
+                Mema.dispatch(showErrorMessage(error));
             });
-            return {...state}
-        }
-
-        // case MemberActionType.Error: {
-        //     return {
-        //         ...state,
-        //         error: true,
-        //         errorMessage: action.memberProps.message
-        //     }
-        // }
-
-        case MemberActionType.LoadAllMembers: {
-            axios.get(`${window.origin}/member/list`).then(res => {
-                Mema.dispatch({
-                    type: MemberActionType.LoadAllMembersFinished,
-                    payload: [...res.data]
-                });
-            }).catch(error => {
-                Mema.dispatch({
-                    type: MemberActionType.Error,
-                    payload: error
-                });
-            });
-            return {...state, loadingMembers: true};
-        }
-        case MemberActionType.LoadAllMembersFinished: {
-            let newState = {...state, loadingMembers: false};
-            newState.members = [...action.memberProps];
-            return newState;
+            return {...state, loading: false}
         }
 
         default:

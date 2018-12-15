@@ -2,10 +2,10 @@ import * as React from "react";
 import * as classes from "../ComponentsStyle.css";
 import {MemberProps} from "../../../data/Member/MemberProps";
 import MemberListEntry from "./MemberListEntry";
-import {AppState} from "../../state/memberList/reducer";
 import {Dispatch} from "redux";
 import {connect, DispatchProp} from "react-redux";
-import {loadAllMembers} from "../../state/memberList/actions";
+import {filterList, loadAllMembers} from "../../state/memberList/actions";
+import {AppState, Mema} from "../../state/store";
 
 // Redux things
 interface StateProps {
@@ -20,7 +20,7 @@ type Properties = StateProps & DispatchProps;
 
 const mapStateToProps = (state: AppState) : StateProps => {
     return {
-        members: state.members
+        members: state.members.list
     }
 };
 
@@ -54,7 +54,9 @@ class MemberList extends React.Component<Properties> {
                 <hr/>
                 <div className={"form-group"}>
                     <label>Suche</label>
-                    <input type="text" className="form-control" placeholder="Name des Mitglieds"/>
+                    <input type="text" className="form-control" placeholder="Name des Mitglieds" onInput={(e) => {
+                        Mema.dispatch(filterList(e.currentTarget.value));
+                    }}/>
                 </div>
                 <ul className={"list-group"} role="tablist">
                     {members}
