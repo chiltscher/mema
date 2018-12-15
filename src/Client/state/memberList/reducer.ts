@@ -3,23 +3,31 @@ import axios from "axios";
 import {MemberAction, MemberActionType, setMemberlist} from "./actions";
 import {Mema} from "../store";
 import {showErrorMessage} from "../ui/actions";
+import Member from "../../../data/Member/Member";
 
 export interface MemberListState {
     loading: boolean;
     filter: string;
+    selected: MemberProps;
     membersAvailable: MemberProps[];
     list: MemberProps[];
 }
 
-const INITIAL_LIST_STATE : MemberListState = {
+const INITIAL_LIST_STATE: MemberListState = {
     loading: false,
     filter: "",
+    selected: new Member(),
     membersAvailable: [],
     list: []
 };
 
-export function MemberReducer(state: MemberListState = INITIAL_LIST_STATE, action: MemberAction) : MemberListState {
+export function MemberReducer(state: MemberListState = INITIAL_LIST_STATE, action: MemberAction): MemberListState {
     switch (action.type) {
+
+        case MemberActionType.SelectMember: {
+            return {...state, selected: action.member}
+        }
+
         case MemberActionType.LoadAllMembers: {
             axios.get(`${window.origin}/member/list`).then(res => {
                 Mema.dispatch(setMemberlist([...res.data]));
@@ -34,7 +42,7 @@ export function MemberReducer(state: MemberListState = INITIAL_LIST_STATE, actio
                 ...state,
                 membersAvailable: membersAvailable,
                 list: membersAvailable.filter(member => {
-                   return (`${member.firstName} ${member.lastName}`).includes(state.filter);
+                    return (`${member.firstName} ${member.lastName}`).includes(state.filter);
                 }),
                 loading: false
             }

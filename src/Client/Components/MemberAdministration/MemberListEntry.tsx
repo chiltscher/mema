@@ -2,7 +2,7 @@ import * as React from "react";
 import { MemberProps } from "../../../data/Member/MemberProps";
 import * as classes from "./MemberAdministrationStyle.css";
 import {Mema} from "../../state/store";
-import {deleteMemeber} from "../../state/memberList/actions";
+import {deleteMemeber, selectMember} from "../../state/memberList/actions";
 
 interface ListEntryProps {
     member: MemberProps;
@@ -15,7 +15,7 @@ export default class MemberListEntry extends React.Component<ListEntryProps> {
     }
 
     render() {
-        return (<li className={"list-group-item"}>
+        return (<li className={"list-group-item"} onClick={() => { Mema.dispatch(selectMember(this.props.member))}}>
             <span className={classes.fullname}>{this.props.member.firstName} {this.props.member.lastName}
             </span>
             <i className={classes.icon + " material-icons"} onClick={this.deleteMemeber.bind(this)}>delete</i></li>)

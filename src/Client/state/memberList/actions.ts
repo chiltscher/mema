@@ -1,4 +1,5 @@
 import {MemberProps} from "../../../data/Member/MemberProps";
+import Member from "../../../data/Member/Member";
 
 export enum MemberActionType {
     DeleteMember = "DELETE_MEMBER",
@@ -7,7 +8,8 @@ export enum MemberActionType {
     SaveMember = "SAVE_MEMBER",
     LoadAllMembers = "LOAD_ALL_MEMBERS",
     SetMemberlist = "SET_MEMBERLIST",
-    Filter = "FILTER_MEMBER_LIST"
+    Filter = "FILTER_MEMBER_LIST",
+    SelectMember = "SELECT_MEMBER"
 }
 
 export interface DeleteMemberAction {
@@ -29,16 +31,22 @@ export interface FilterAction {
     filter: string;
 }
 
-export type MemberAction = DeleteMemberAction | LoadMembersAction | SetMemberlistAction | FilterAction;
+export interface SelectAction {
+    type: MemberActionType.SelectMember;
+    member: MemberProps;
+}
 
-export function deleteMemeber(id: string) : DeleteMemberAction {
+
+export type MemberAction = DeleteMemberAction | LoadMembersAction | SetMemberlistAction | FilterAction | SelectAction;
+
+export function deleteMemeber(id: string): DeleteMemberAction {
     return {
         type: MemberActionType.DeleteMember,
         id: id
     }
 }
 
-export function filterList(filter: string) : FilterAction  {
+export function filterList(filter: string): FilterAction {
     return {
         type: MemberActionType.Filter,
         filter
@@ -46,13 +54,27 @@ export function filterList(filter: string) : FilterAction  {
 }
 
 
-export function loadAllMembers() : LoadMembersAction {
+export function loadAllMembers(): LoadMembersAction {
     return {
         type: MemberActionType.LoadAllMembers
     }
 }
 
-export function setMemberlist(list: MemberProps[]) : SetMemberlistAction {
+export function createMember(): SelectAction {
+    return {
+        type: MemberActionType.SelectMember,
+        member: new Member()
+    }
+}
+
+export function selectMember(member: MemberProps) : SelectAction {
+    return {
+        type: MemberActionType.SelectMember,
+        member
+    }
+}
+
+export function setMemberlist(list: MemberProps[]): SetMemberlistAction {
     return {
         type: MemberActionType.SetMemberlist,
         list
